@@ -1,0 +1,62 @@
+.input-container {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background: #ebebeb;
+  border-radius: 17px;
+  margin-bottom: 4%;
+}
+
+.input-box {
+  align-self: center;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  /* font-size: 30px; */
+  line-height: 35px;
+
+  color: #747474;
+}
+.input-img {
+  width: 34px;
+  height: 35px;
+  padding: 5px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .input-box {
+    font-size: 20px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .input-box {
+    font-size: 25px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .input-box {
+    font-size: 30px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .input-box {
+    font-size: 30px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .input-box {
+    font-size: 30px;
+  }
+}

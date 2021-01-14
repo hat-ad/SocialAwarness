@@ -1,0 +1,159 @@
+.sidebar {
+  width: 569px;
+  height: 100vh;
+  background: url("../../Assets/sidebar-img.png"), #5370ba;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.side-title h1 {
+  padding-bottom: 10%;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 70px;
+  text-align: center;
+
+  color: #ffffff;
+}
+
+.side-body-text h6 {
+  padding-bottom: 18%;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+  text-align: center;
+  margin-left: 25px;
+  color: #ffffff;
+}
+
+.sign-button-container {
+}
+.sign-button {
+  width: 60%;
+  height: 7%;
+
+  background: rgba(255, 255, 255, 0.01);
+  border: 2px solid #fafafa;
+  box-sizing: border-box;
+  backdrop-filter: blur(9px);
+
+  border-radius: 67px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  /* border: none; */
+  /* background: none; */
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: 30px;
+  text-align: center;
+  color: #ffffff;
+  outline: none;
+}
+
+.right-side-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.heading h1 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 60px;
+  line-height: 70px;
+  text-align: center;
+
+  color: #3b5ecb;
+  margin-bottom: 20%;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-width: 30%;
+}
+
+.submit-button {
+  height: 7%;
+  background: #3b5ecb;
+  border-radius: 67px;
+
+  outline: none;
+  border: none;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  /* line-height: -30px; */
+  text-align: center;
+  color: #ffffff;
+}
+.submit-button h6 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 26px;
+  line-height: -30px;
+  text-align: center;
+  color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  .submit-button {
+    width: 60%;
+    margin-top: 10%;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .submit-button {
+    width: 60%;
+    margin-top: 10%;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .submit-button {
+    width: 27%;
+    margin-top: 10%;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .submit-button {
+    width: 30%;
+    margin-top: 5%;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .submit-button {
+    width: 25%;
+    margin-top: 5%;
+  }
+}
