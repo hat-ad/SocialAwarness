@@ -1,4 +1,5 @@
-import AppInput from './appInput/index'
+import AppInput from "./appInput/index";
+import HomeInput from "./homeInput/index";
+import AppCard from "./appCard/index";
 
-
-export {AppInput}
+export { AppInput, HomeInput, AppCard };

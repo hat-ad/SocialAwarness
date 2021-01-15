@@ -1,0 +1,98 @@
+.home-container {
+  margin-inline: 10%;
+  margin-top: 5%;
+  display: flex;
+}
+
+.profile-card {
+  width: 280px;
+  height: 458px;
+  background: #53ba80;
+  box-shadow: 0px 4px 37px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+
+  display: flex;
+  align-items: flex-end;
+}
+.inner-container {
+  width: 280px;
+  height: 358px;
+  left: 52px;
+  top: 154px;
+
+  background: #ffffff;
+  border-radius: 28px 28px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.profile_pic {
+  margin-top: -90%;
+  margin-bottom: 15%;
+}
+.form-container {
+  width: 90%;
+}
+.edit {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+
+  color: white;
+  border: none;
+  outline: none;
+  width: 99px;
+  height: 35px;
+
+  background: #53ba80;
+  border-radius: 7px;
+}
+
+.tabs {
+  margin-top: 10%;
+  width: 280px;
+  height: 417px;
+  background: #ffffff;
+  box-shadow: 0px 4px 39px rgba(0, 0, 0, 0.25);
+  padding: 6%;
+}
+.lower-sec {
+  height: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 15%;
+}
+.upper-sec {
+  display: flex;
+  flex-direction: column;
+
+  height: 50%;
+  width: 100%;
+}
+.tab-title {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 29px;
+
+  color: #53ba80;
+}
+.tab-text-button {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  background: none;
+  outline: none;
+  border: none;
+  text-align: left;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+
+  color: #6d6d6d;
+}

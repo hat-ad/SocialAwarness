@@ -1,0 +1,46 @@
+.ico-input {
+  border: none;
+  background: none;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  padding: 15%;
+
+  color: #000000;
+  outline: none;
+}
+
+.ico-input:disabled {
+  border: none;
+  background: none;
+}
+
+.active {
+  /* margin-bottom: 1rem; */
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  box-shadow: rgb(161, 161, 161) 0.5px 0.5px 2px;
+}
+
+.input-group-prepend {
+  align-items: center;
+  padding-right: 1rem;
+}
+
+.input-container-box {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 5%;
+  padding-left: 5%;
+}
+
+.ico-input {
+  padding: 5%;
+  width: 90%;
+}
+
+.img-container {
+  padding: 1rem;
+}
