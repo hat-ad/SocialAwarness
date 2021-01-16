@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 
-import { AppInput, HomeInput, AppCard } from "../../components/index";
+import { AppInput, HomeInput, AppCard, Modal } from "../../components/index";
 
 import prof from "../../Assets/Ellipse 2.png";
 import user from "../../Assets/user_ico.png";
 import mail from "../../Assets/email_ico.png";
 import call from "../../Assets/call.png";
+import gallery from "../../Assets/gallery.png";
+import video from "../../Assets/video.png";
 
 const HomeScreen = () => {
+  const [isShow, setShow] = useState(false);
+
+  const _handleModal = () => {
+    if (!isShow) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  };
   return (
     <div className="home-container">
       <div className="col-4">
@@ -64,10 +75,33 @@ const HomeScreen = () => {
         </div>
       </div>
       <div className="col-8">
+        <div className="post-create-container">
+          <div className="post-create-upper-sec">
+            <img className="post-create-img" src={prof} alt="img" />
+            <button
+              className="post-create-modal-button"
+              onClick={_handleModal}
+              type="button"
+            >
+              post your cause
+            </button>
+          </div>
+          <div className="post-create-lower-sec">
+            <button className="post-create-media-button">
+              <img src={gallery} className="post-create-media-img" alt="img" />
+              <span className="post-create-label">photo</span>
+            </button>
+            <button className="post-create-media-button ">
+              <img src={video} className="post-create-media-img " alt="img" />
+              <span className="post-create-label">video</span>
+            </button>
+          </div>
+        </div>
         <AppCard />
         <AppCard />
         <AppCard />
         <AppCard />
+        {isShow ? <Modal /> : null}
       </div>
     </div>
   );
