@@ -4,13 +4,15 @@ import prof from "../../Assets/Ellipse 2.png";
 import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 
-const Modal = () => {
+const Modal = ({ onClick }) => {
   return (
     <div className="modal-container">
       <div className="modal-main">
         <div className="modal-head-sec">
           <span className="modal-head-title">Create Cause</span>
-          <span className="close">&times;</span>
+          <span className="close" onClick={onClick}>
+            &times;
+          </span>
         </div>
         <hr />
         <div className="modal-mid-sec">

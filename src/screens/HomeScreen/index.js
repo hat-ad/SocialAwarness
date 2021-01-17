@@ -101,7 +101,13 @@ const HomeScreen = () => {
         <AppCard />
         <AppCard />
         <AppCard />
-        {isShow ? <Modal /> : null}
+        {isShow ? (
+          <Modal
+            onClick={() => {
+              setShow(false);
+            }}
+          />
+        ) : null}
       </div>
     </div>
   );
