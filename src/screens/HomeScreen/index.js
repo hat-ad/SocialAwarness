@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./style.css";
 
-import { AppInput, HomeInput, AppCard, Modal } from "../../components/index";
+import {
+  AppInput,
+  HomeInput,
+  AppCard,
+  Modal,
+  VolunteerModal,
+} from "../../components/index";
 
 import prof from "../../Assets/Ellipse 2.png";
 import user from "../../Assets/user_ico.png";
@@ -11,15 +17,22 @@ import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 
 const HomeScreen = () => {
-  const [isShow, setShow] = useState(false);
+  const [isShowModal, setShowModal] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const _handleModal = () => {
-    if (!isShow) {
-      setShow(true);
+    if (!isShowModal) {
+      setShowModal(true);
     } else {
-      setShow(false);
+      setShowModal(false);
     }
   };
+
+  const _handleEdit = () => {
+    if (!edit) setEdit(true);
+    else setEdit(false);
+  };
+
   return (
     <div className="home-container">
       <div className="col-4">
@@ -33,24 +46,26 @@ const HomeScreen = () => {
               <div className="form-container">
                 <HomeInput
                   source={user}
-                  disabled={true}
+                  disabled={!edit}
                   placeholder="name"
                   styleImg={{ width: "28px", height: "29px" }}
                 />
                 <HomeInput
                   source={mail}
-                  disabled={true}
+                  disabled={!edit}
                   placeholder="email"
                   styleImg={{ width: "28px", height: "29px" }}
                 />
                 <HomeInput
                   source={call}
-                  disabled={true}
+                  disabled={!edit}
                   placeholder="mobile"
                   styleImg={{ width: "28px", height: "29px" }}
                 />
               </div>
-              <button className="edit">edit</button>
+              <button className="edit" onClick={_handleEdit}>
+                {edit ? "submit" : "edit"}
+              </button>
             </div>
           </div>
         </div>
@@ -101,14 +116,15 @@ const HomeScreen = () => {
         <AppCard />
         <AppCard />
         <AppCard />
-        {isShow ? (
-          <Modal
-            onClick={() => {
-              setShow(false);
-            }}
-          />
-        ) : null}
+        <AppCard />
       </div>
+      {isShowModal ? (
+        <Modal
+          onClick={() => {
+            setShowModal(false);
+          }}
+        />
+      ) : null}
     </div>
   );
 };

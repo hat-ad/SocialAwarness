@@ -94,7 +94,7 @@
 }
 
 .submit-button {
-  height: 7%;
+  padding: 1%;
   background: #3b5ecb;
   border-radius: 67px;
 
@@ -118,7 +118,10 @@
   text-align: center;
   color: #ffffff;
 }
-
+.submit-button:hover {
+  text-decoration: none;
+  color: white;
+}
 @media only screen and (max-width: 600px) {
   .submit-button {
     width: 60%;

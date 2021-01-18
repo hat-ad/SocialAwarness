@@ -8,12 +8,14 @@ import user from "../../Assets/user_ico.png";
 import mail from "../../Assets/email_ico.png";
 import lock from "../../Assets/lock_ico.png";
 
+import { Link } from "react-router-dom";
+
 const LoginScreen = () => {
   const [isSignIn, setSignIn] = useState(false);
 
   return (
     <>
-      <div className="row">
+      <div className="row" style={{ overflow: "hidden" }}>
         <div className="col-md-4 sidebar">
           {/* <div className=""> */}
           <div className="side-title">
@@ -59,9 +61,9 @@ const LoginScreen = () => {
             )}
           </div>
           {/* <div className="submit-button-container"> */}
-          <button className="submit-button">
+          <Link to="/home" className="submit-button">
             {isSignIn ? "Sign In" : "Sign Up"}
-          </button>
+          </Link>
           {/* </div> */}
         </div>
       </div>

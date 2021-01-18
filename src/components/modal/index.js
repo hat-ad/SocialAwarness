@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import "./style.css";
 import prof from "../../Assets/Ellipse 2.png";
 import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 
 const Modal = ({ onClick }) => {
+  const [isAd, setisAd] = useState(false);
+  const _handleSwitch = () => {
+    if (!isAd) setisAd(true);
+    else setisAd(false);
+  };
   return (
     <div className="modal-container">
       <div className="modal-main">
         <div className="modal-head-sec">
-          <span className="modal-head-title">Create Cause</span>
+          <span className="modal-head-title">
+            {isAd ? "Create Ad" : "Create Cause"}
+          </span>
           <span className="close" onClick={onClick}>
             &times;
           </span>
@@ -47,7 +54,7 @@ const Modal = ({ onClick }) => {
               <span className="switch-label">Create Ad: </span>
 
               <label className="switch">
-                <input type="checkbox" />
+                <input type="checkbox" onClick={_handleSwitch} />
                 <span className="slider round"></span>
               </label>
             </div>
@@ -60,7 +67,9 @@ const Modal = ({ onClick }) => {
             <div className="modal-input-cause">
               <textarea
                 className="modal-cause-main"
-                placeholder="Enter Your Cause"
+                placeholder={
+                  isAd ? "Enter your Ad description" : "Enter Your Cause"
+                }
               ></textarea>
             </div>
           </div>
@@ -75,7 +84,9 @@ const Modal = ({ onClick }) => {
               justifyContent: "flex-start",
             }}
           >
-            <span className="modal-media-label"> Add to your Cause: </span>
+            <span className="modal-media-label">
+              {isAd ? "Addto your Advertisement: " : "Add to your Cause: "}
+            </span>
             <button className="post-create-media-button">
               <img src={gallery} className="post-create-media-img" alt="img" />
               <span className="post-create-label " style={{ fontSize: "20px" }}>
