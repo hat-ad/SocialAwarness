@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import "./style.css";
-import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 import { AppInput } from "../../components/index";
 
@@ -10,13 +9,25 @@ import lock from "../../Assets/lock_ico.png";
 
 import { Link } from "react-router-dom";
 
+import API from "../../API/service/api";
+
+const Token = createContext();
+
 const LoginScreen = () => {
   const [isSignIn, setSignIn] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const getToken = async () => {
+    const response = await API.httpRequestOAuth({ email, password });
+    // if (response.status === "user logged in")
+    <Token.Provider value={response.token} />;
+  };
 
   return (
     <>
-      <div className="row" style={{ overflow: "hidden" }}>
-        <div className="col-md-4 sidebar">
+      <div className="row">
+        <div className="col-md-4 sidebar" style={{ overflow: "hidden" }}>
           {/* <div className=""> */}
           <div className="side-title">
             <h1>{isSignIn ? "Hello Friend!" : "Welcome Back"}</h1>
@@ -42,15 +53,23 @@ const LoginScreen = () => {
 
           {/* </div> */}
         </div>
-        <div className="col-md-8 right-side-bar">
+        <div className="col-md-8 right-side-bar" style={{ overflow: "hidden" }}>
           <div className="heading">
             <h1>{isSignIn ? "Sign In" : "Create Account"}</h1>
           </div>
           <div className="form">
             {isSignIn ? (
               <>
-                <AppInput placeholder="email" source={mail} />
-                <AppInput placeholder="password" source={lock} />
+                <AppInput
+                  placeholder="email"
+                  source={mail}
+                  onInputText={(e) => setEmail(e.target.value)}
+                />
+                <AppInput
+                  placeholder="password"
+                  source={lock}
+                  onInputText={(e) => setPassword(e.target.value)}
+                />
               </>
             ) : (
               <>
@@ -61,7 +80,7 @@ const LoginScreen = () => {
             )}
           </div>
           {/* <div className="submit-button-container"> */}
-          <Link to="/home" className="submit-button">
+          <Link to="/home" className="submit-button" onClick={getToken}>
             {isSignIn ? "Sign In" : "Sign Up"}
           </Link>
           {/* </div> */}
@@ -72,3 +91,4 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+export { Token };

@@ -10,7 +10,7 @@ import { VolunteerModal } from "../../components/index";
 
 import { Link } from "react-router-dom";
 
-const AppCard = () => {
+const AppCard = ({ src, name, txtBody, srcBody }) => {
   const [isShowVolunteerModal, setShowVolunteer] = useState(false);
   const [appreciateName, setAppreciateName] = useState("");
 
@@ -39,17 +39,16 @@ const AppCard = () => {
             ></img>
           </div>
           <div className="post-header-name-container">
-            <span className="post-header-title">John Collins</span>
+            <span className="post-header-title">{name}</span>
             <span className="post-header-subtitle">jan 7 at 19:57</span>
           </div>
         </div>
         <div className="posts-body">
           <div className="post-body-text mb-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-            nisl eros...<span>read more</span>
+            {txtBody}...<span>read more</span>
           </div>
           <div className="post-body-image-container">
-            <img src={postImg} alt="pr" className="post-body-image"></img>
+            <img src={srcBody} alt="pr" className="post-body-image"></img>
           </div>
         </div>
         <p className="card-text mt-3" style={{ color: "grey" }}>

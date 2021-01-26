@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
 
 import {
@@ -16,9 +16,23 @@ import call from "../../Assets/call.png";
 import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 
+import API from "../../API/service/api";
+
 const HomeScreen = () => {
   const [isShowModal, setShowModal] = useState(false);
   const [edit, setEdit] = useState(false);
+  const [cause, setCause] = useState([]);
+
+  useEffect(() => {
+    const post = async () => {
+      const response = await API.get("cause");
+      console.log(response.cause[0]);
+      if (response.status === "OK") {
+        setCause(response.cause);
+      }
+    };
+    post();
+  }, []);
 
   const _handleModal = () => {
     if (!isShowModal) {
@@ -112,11 +126,19 @@ const HomeScreen = () => {
             </button>
           </div>
         </div>
+        {cause.map((obj) => {
+          return (
+            <AppCard
+              txtBody={obj.content}
+              srcBody={"data:image/jpeg;base64," + obj.media}
+            />
+          );
+        })}
+
+        {/* <AppCard />
         <AppCard />
         <AppCard />
-        <AppCard />
-        <AppCard />
-        <AppCard />
+        <AppCard /> */}
       </div>
       {isShowModal ? (
         <Modal
