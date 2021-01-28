@@ -22,6 +22,7 @@ const LoginScreen = () => {
     const response = await API.httpRequestOAuth({ email, password });
     // if (response.status === "user logged in")
     <Token.Provider value={response.token} />;
+    localStorage.setItem("userID", response.userId);
   };
 
   return (

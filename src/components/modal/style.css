@@ -169,3 +169,9 @@ input:checked + .slider:before {
 
   color: #000000;
 }
+.post-create-media-button {
+  width: 30%;
+}
+.post-create-img {
+  border-radius: 50%;
+}

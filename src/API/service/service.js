@@ -81,7 +81,7 @@ export default class API {
                 // Authorization:
                 //   token !== null && `${token.token_type} ${token.access_token}`,
                 Authorization:
-                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDBkOTlhNDYzYmY0NTBkNDkxZTgyN2MiLCJpYXQiOjE2MTE2NDIwOTl9.MiTV4yB0S9ai7MFfPWzEmw50H4VneBHPlFMy_ZD0zIo",
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDEyN2UzZjViMTFjOTM4N2YwZjRlZDAiLCJpYXQiOjE2MTE4MjYxNzl9.g-n4qN9ynFwJ92GtFRTno96fejMQbDo__s9JAuII5OQ",
                 "Content-Type": "application/json",
               },
           method: method,
@@ -91,6 +91,9 @@ export default class API {
           headers: header
             ? header
             : {
+                Authorization:
+                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDEyN2UzZjViMTFjOTM4N2YwZjRlZDAiLCJpYXQiOjE2MTE4MjYxNzl9.g-n4qN9ynFwJ92GtFRTno96fejMQbDo__s9JAuII5OQ",
+
                 // Authorization: `${token.token_type} ${token.access_token}`,
                 "Content-Type": "application/json",
               },
@@ -128,9 +131,9 @@ export default class API {
     return new Promise((resolve, reject) => {
       let options = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          // "Content-Type": "multipart/form-data",
           Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDBkOTlhNDYzYmY0NTBkNDkxZTgyN2MiLCJpYXQiOjE2MTE2NDIwOTl9.MiTV4yB0S9ai7MFfPWzEmw50H4VneBHPlFMy_ZD0zIo",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDEyN2UzZjViMTFjOTM4N2YwZjRlZDAiLCJpYXQiOjE2MTE4MjYxNzl9.g-n4qN9ynFwJ92GtFRTno96fejMQbDo__s9JAuII5OQ",
           //   Authorization: `${token.token_type} ${token.access_token}`,
         },
         method: method,

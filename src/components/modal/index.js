@@ -1,15 +1,58 @@
 import React, { useState } from "react";
 import "./style.css";
-import prof from "../../Assets/Ellipse 2.png";
+
 import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
+import API from "../../API/service/api";
 
-const Modal = ({ onClick }) => {
+const Modal = ({ onClick, currentTime }) => {
   const [isAd, setisAd] = useState(false);
+  const [imgName, setImageName] = useState("");
+  const [videoName, setVideoName] = useState("");
+
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  // const [currentTime, setCurrentTime] = useState("");
+
   const _handleSwitch = () => {
     if (!isAd) setisAd(true);
     else setisAd(false);
   };
+
+  const _handleFileSelectImg = (e) => {
+    console.log(e.target.files[0].name);
+    setImageName(e.target.files[0]);
+  };
+
+  const _handleFileSelectVideo = (e) => {
+    console.log(e.target.files[0].name);
+    setVideoName(e.target.files[0].name);
+  };
+
+  const _handleSubmit = async () => {
+    let formdata = new FormData();
+    formdata.append("title", title);
+    formdata.append("content", description);
+    formdata.append("uploadPostimg", imgName, imgName.name);
+    formdata.append(
+      "createdBy",
+      `${localStorage.getItem("name")}Image${localStorage.getItem(
+        "profile_Img"
+      )}`
+    );
+    formdata.append("createdByID", localStorage.getItem("userID"));
+
+    // for (let pair of formdata.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+    await API.postForm("cause", formdata);
+    // console.log(response);
+
+    //TODO : add the post added status using redux
+  };
+
+  // getCurrentTime();
+
   return (
     <div className="modal-container">
       <div className="modal-main">
@@ -33,15 +76,17 @@ const Modal = ({ onClick }) => {
             <div className="posts-header">
               <div className="post-header-image-container">
                 <img
-                  src={prof}
+                  src={localStorage.getItem("profile_Img")}
                   alt="pr"
                   className="post-header-image"
                   style={{ width: "81px", height: "69px" }}
                 ></img>
               </div>
               <div className="post-header-name-container">
-                <span className="post-header-title">John Collins</span>
-                <span className="post-header-subtitle">jan 7 at 19:57</span>
+                <span className="post-header-title">
+                  {localStorage.getItem("name")}
+                </span>
+                <span className="post-header-subtitle">{currentTime}</span>
               </div>
             </div>
             <div
@@ -61,7 +106,14 @@ const Modal = ({ onClick }) => {
           </div>
           <div className="modal-text-input-container">
             <div className="modal-input-title">
-              <input className="modal-title-main" placeholder="Enter title" />
+              <input
+                className="modal-title-main"
+                placeholder="Enter title"
+                onInput={(e) => {
+                  setTitle(e.target.value);
+                }}
+                required
+              />
             </div>
             <br />
             <div className="modal-input-cause">
@@ -70,6 +122,10 @@ const Modal = ({ onClick }) => {
                 placeholder={
                   isAd ? "Enter your Ad description" : "Enter Your Cause"
                 }
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                required
               ></textarea>
             </div>
           </div>
@@ -87,21 +143,33 @@ const Modal = ({ onClick }) => {
             <span className="modal-media-label">
               {isAd ? "Addto your Advertisement: " : "Add to your Cause: "}
             </span>
-            <button className="post-create-media-button">
+            <div className="post-create-media-button">
+              <input
+                type="file"
+                style={{ position: "absolute", width: "10%", opacity: "0" }}
+                onChange={_handleFileSelectImg}
+              />
               <img src={gallery} className="post-create-media-img" alt="img" />
               <span className="post-create-label " style={{ fontSize: "20px" }}>
-                photo
+                {imgName === "" ? "photo" : imgName.name}
               </span>
-            </button>
+            </div>
             <button className="post-create-media-button ">
+              <input
+                type="file"
+                style={{ position: "absolute", width: "10%", opacity: "0" }}
+                onChange={_handleFileSelectVideo}
+              />
               <img src={video} className="post-create-media-img " alt="img" />
               <span className="post-create-label " style={{ fontSize: "20px" }}>
-                video
+                {videoName === "" ? "video" : videoName}
               </span>
             </button>
           </div>
           <div className="modal-post-button-container">
-            <button className="modal-post-button">Post</button>
+            <button className="modal-post-button" onClick={_handleSubmit}>
+              Post
+            </button>
           </div>
         </div>
       </div>

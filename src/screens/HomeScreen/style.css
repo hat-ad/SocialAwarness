@@ -29,7 +29,12 @@
 }
 .profile_pic {
   margin-top: -90%;
-  margin-bottom: 15%;
+  margin-bottom: 12%;
+  max-height: 8rem;
+  max-width: 8rem;
+  border-radius: 50%;
+  background-color: white;
+  border: thin #53ba80 solid;
 }
 .form-container {
   width: 90%;

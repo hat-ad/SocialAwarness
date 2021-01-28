@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import "./style.css";
-import prof from "../../Assets/Ellipse 2.png";
-import postImg from "../../Assets/scene.png";
 import appreciate_ico from "../../Assets/clap.png";
 import comment_ico from "../../Assets/comment.png";
 import volunteer_ico from "../../Assets/volunteer.png";
@@ -10,14 +8,17 @@ import { VolunteerModal } from "../../components/index";
 
 import { Link } from "react-router-dom";
 
-const AppCard = ({ src, name, txtBody, srcBody }) => {
+const AppCard = ({
+  src,
+  name,
+  txtBody,
+  srcBody,
+  appreciateCount,
+  onAppreciate,
+  cause_id,
+}) => {
   const [isShowVolunteerModal, setShowVolunteer] = useState(false);
-  const [appreciateName, setAppreciateName] = useState("");
-
-  const _handleAppreciateClick = () => {
-    setAppreciateName("you and 4 others appreciated");
-  };
-
+  // const postId = id;
   const _handleVolunteerModal = () => {
     if (!isShowVolunteerModal) {
       setShowVolunteer(true);
@@ -31,7 +32,7 @@ const AppCard = ({ src, name, txtBody, srcBody }) => {
         <div className="posts-header">
           <div className="post-header-image-container">
             <img
-              src={prof}
+              src={src}
               alt="pr"
               className="post-header-image"
               width={"81px"}
@@ -52,21 +53,18 @@ const AppCard = ({ src, name, txtBody, srcBody }) => {
           </div>
         </div>
         <p className="card-text mt-3" style={{ color: "grey" }}>
-          {appreciateName === "" ? "4 appreciated" : appreciateName}
+          {appreciateCount === "" ? "0 appreciated" : appreciateCount}
         </p>
         <hr />
         <div className="posts-footer">
           <div className="appreciate">
-            <button
-              className="appreciate-button"
-              onClick={_handleAppreciateClick}
-            >
+            <button className="appreciate-button" onClick={onAppreciate}>
               <img src={appreciate_ico} alt="ico" />
               <span>appreciate</span>
             </button>
           </div>
           <div className="comment">
-            <Link to="/details" className="appreciate-button">
+            <Link to={"/details/" + cause_id} className="appreciate-button">
               <img src={comment_ico} alt="ico" />
               <span>comment</span>
             </Link>

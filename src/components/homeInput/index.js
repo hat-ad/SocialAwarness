@@ -1,8 +1,15 @@
 import React from "react";
 import "./style.css";
-import prof from "../../Assets/Ellipse 2.png";
 
-const HomeInput = ({ source, placeholder, disabled, styleImg }) => {
+const HomeInput = ({
+  source,
+  placeholder,
+  disabled,
+  styleImg,
+  styleInput,
+  value,
+  onInputText,
+}) => {
   return (
     <div
       className={
@@ -14,6 +21,9 @@ const HomeInput = ({ source, placeholder, disabled, styleImg }) => {
         className="ico-input"
         disabled={disabled}
         placeholder={placeholder}
+        style={styleInput}
+        onInput={onInputText}
+        defaultValue={value}
       />
     </div>
   );
