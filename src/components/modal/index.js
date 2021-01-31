@@ -41,16 +41,21 @@ const Modal = ({ onClick, currentTime }) => {
       )}`
     );
     formdata.append("createdByID", localStorage.getItem("userID"));
-
     // for (let pair of formdata.entries()) {
     //   console.log(pair[0] + ", " + pair[1]);
     // }
-    await API.postForm("cause", formdata);
-    // console.log(response);
-
+    await API.postForm(isAd ? "ad" : "cause", formdata);
+    onClick();
+    alert("your post has been created");
     //TODO : add the post added status using redux
   };
-
+  const _validation = () => {
+    if (title === "" && description === "" && imgName === "") {
+      alert(`please fill all the fields and upload an image to proceed`);
+    } else {
+      _handleSubmit();
+    }
+  };
   // getCurrentTime();
 
   return (
@@ -154,7 +159,7 @@ const Modal = ({ onClick, currentTime }) => {
                 {imgName === "" ? "photo" : imgName.name}
               </span>
             </div>
-            <button className="post-create-media-button ">
+            {/* <button className="post-create-media-button ">
               <input
                 type="file"
                 style={{ position: "absolute", width: "10%", opacity: "0" }}
@@ -164,10 +169,15 @@ const Modal = ({ onClick, currentTime }) => {
               <span className="post-create-label " style={{ fontSize: "20px" }}>
                 {videoName === "" ? "video" : videoName}
               </span>
-            </button>
+            </button> */}
           </div>
           <div className="modal-post-button-container">
-            <button className="modal-post-button" onClick={_handleSubmit}>
+            <button
+              className="modal-post-button"
+              onClick={() => {
+                _validation();
+              }}
+            >
               Post
             </button>
           </div>

@@ -13,16 +13,29 @@ import API from "../../API/service/api";
 
 const Token = createContext();
 
-const LoginScreen = () => {
-  const [isSignIn, setSignIn] = useState(false);
+const LoginScreen = (props) => {
+  const [isSignIn, setSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
-  const getToken = async () => {
-    const response = await API.httpRequestOAuth({ email, password });
-    // if (response.status === "user logged in")
+  const auth = async () => {
+    const response = await (isSignIn
+      ? API.postOAuth({ email, password })
+      : API.post("register", { name: name, email: email, password: password }));
+    if (
+      response.status === "user logged in" ||
+      response.status === "User created"
+    ) {
+      localStorage.setItem(
+        "userID",
+        isSignIn ? response.userId : response.user._id
+      );
+      props.history.replace("/home");
+    } else {
+      alert("please login to continue");
+    }
     <Token.Provider value={response.token} />;
-    localStorage.setItem("userID", response.userId);
   };
 
   return (
@@ -74,16 +87,28 @@ const LoginScreen = () => {
               </>
             ) : (
               <>
-                <AppInput placeholder="name" source={user} />
-                <AppInput placeholder="email" source={mail} />
-                <AppInput placeholder="password" source={lock} />
+                <AppInput
+                  placeholder="name"
+                  source={user}
+                  onInputText={(e) => setName(e.target.value)}
+                />
+                <AppInput
+                  placeholder="email"
+                  source={mail}
+                  onInputText={(e) => setEmail(e.target.value)}
+                />
+                <AppInput
+                  placeholder="password"
+                  source={lock}
+                  onInputText={(e) => setPassword(e.target.value)}
+                />
               </>
             )}
           </div>
           {/* <div className="submit-button-container"> */}
-          <Link to="/home" className="submit-button" onClick={getToken}>
+          <button className="submit-button" onClick={auth}>
             {isSignIn ? "Sign In" : "Sign Up"}
-          </Link>
+          </button>
           {/* </div> */}
         </div>
       </div>

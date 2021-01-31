@@ -166,3 +166,13 @@
 
   color: #000000;
 }
+
+.user-detail-img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.user-detail-img-container:hover {
+  transition: 0.5s;
+  opacity: 0.6;
+}
