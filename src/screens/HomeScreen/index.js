@@ -322,7 +322,7 @@ const HomeScreen = () => {
                     paddingTop: "6%",
                     paddingBottom: "6%",
                     width: "120px",
-                    height: "4%",
+                    height: "13%",
                     opacity: 0,
                   }}
                   className="inp"
