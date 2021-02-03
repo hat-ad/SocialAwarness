@@ -171,6 +171,7 @@ const Modal = ({ onClick, currentTime }) => {
               </span>
             </button> */}
           </div>
+
           <div className="modal-post-button-container">
             <button
               className="modal-post-button"

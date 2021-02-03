@@ -1,6 +1,5 @@
 import React from "react";
 import "./style.css";
-import prof from "../../Assets/Ellipse 2.png";
 
 const Comment = ({ src, name, time, desc }) => {
   return (
