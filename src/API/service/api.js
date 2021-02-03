@@ -1,7 +1,8 @@
 import API from "./service";
 
-export const baseUrl = "http://localhost:8000/api/";
-export const oAuth = "http://localhost:8000/api/users/get-token/";
+export const baseUrl = "https://social-awarness-backend.herokuapp.com/api/";
+export const oAuth =
+  "https://social-awarness-backend.herokuapp.com/api/users/get-token/";
 
 const Api = new API({
   baseUrl: baseUrl,
