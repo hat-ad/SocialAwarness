@@ -33,7 +33,7 @@ const Modal = ({ onClick, currentTime }) => {
     let formdata = new FormData();
     formdata.append("title", title);
     formdata.append("content", description);
-    formdata.append("uploadPostimg", imgName, imgName.name);
+    formdata.append("img", imgName, imgName.name);
     formdata.append(
       "createdBy",
       `${localStorage.getItem("name")}Image${localStorage.getItem(

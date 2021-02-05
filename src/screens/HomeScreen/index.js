@@ -197,7 +197,7 @@ const HomeScreen = () => {
     if (!edit) setEdit(true);
     else {
       setEdit(false);
-
+      console.log(profileImg);
       let formdata = new FormData();
       if (editImg) {
         formdata.append("img", profileImg, profileImg.name);
