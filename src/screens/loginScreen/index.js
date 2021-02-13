@@ -40,76 +40,88 @@ const LoginScreen = (props) => {
 
   return (
     <>
-      <div className="row">
-        <div className="col-md-4 sidebar" style={{ overflow: "hidden" }}>
-          {/* <div className=""> */}
-          <div className="side-title">
-            <h1>{isSignIn ? "Hello Friend!" : "Welcome Back"}</h1>
-          </div>
-          <div className="side-body-text">
-            <h6>
-              {isSignIn
-                ? "Enter your personal details and start journey with us"
-                : " To keep connected with us please login with your personal info"}
-            </h6>
-          </div>
-          {isSignIn ? (
-            // <div className="sign-button-container">
-            <button className="sign-button" onClick={() => setSignIn(false)}>
-              Sign Up
-            </button>
-          ) : (
-            // </div>
-            <button className="sign-button" onClick={() => setSignIn(true)}>
-              Sign In
-            </button>
-          )}
-
-          {/* </div> */}
-        </div>
-        <div className="col-md-8 right-side-bar" style={{ overflow: "hidden" }}>
-          <div className="heading">
-            <h1>{isSignIn ? "Sign In" : "Create Account"}</h1>
-          </div>
-          <div className="form">
+      <div style={{ overflow: "hidden" }}>
+        <div className="row">
+          <div className="col-md-4 sidebar">
+            {/* <div className=""> */}
+            <div className="side-title">
+              <h1>{isSignIn ? "Hello Friend!" : "Welcome Back"}</h1>
+            </div>
+            <div className="side-body-text">
+              <h6>
+                {isSignIn
+                  ? "Enter your personal details and start journey with us"
+                  : " To keep connected with us please login with your personal info"}
+              </h6>
+            </div>
             {isSignIn ? (
-              <>
-                <AppInput
-                  placeholder="email"
-                  source={mail}
-                  onInputText={(e) => setEmail(e.target.value)}
-                />
-                <AppInput
-                  placeholder="password"
-                  source={lock}
-                  onInputText={(e) => setPassword(e.target.value)}
-                />
-              </>
+              // <div className="sign-button-container">
+              <button className="sign-button" onClick={() => setSignIn(false)}>
+                Sign Up
+              </button>
             ) : (
-              <>
-                <AppInput
-                  placeholder="name"
-                  source={user}
-                  onInputText={(e) => setName(e.target.value)}
-                />
-                <AppInput
-                  placeholder="email"
-                  source={mail}
-                  onInputText={(e) => setEmail(e.target.value)}
-                />
-                <AppInput
-                  placeholder="password"
-                  source={lock}
-                  onInputText={(e) => setPassword(e.target.value)}
-                />
-              </>
+              // </div>
+              <button
+                className="sign-button"
+                onClick={() => {
+                  setSignIn(true);
+                }}
+              >
+                Sign In
+              </button>
             )}
+
+            {/* </div> */}
           </div>
-          {/* <div className="submit-button-container"> */}
-          <button className="submit-button" onClick={auth}>
-            {isSignIn ? "Sign In" : "Sign Up"}
-          </button>
-          {/* </div> */}
+          <div className="col-md-8 right-side-bar">
+            <div className="heading">
+              <h1>{isSignIn ? "Sign In" : "Create Account"}</h1>
+            </div>
+            <div className="form">
+              {isSignIn ? (
+                <>
+                  <AppInput
+                    type="email"
+                    placeholder="email"
+                    source={mail}
+                    onInputText={(e) => setEmail(e.target.value)}
+                  />
+                  <AppInput
+                    type="password"
+                    placeholder="password"
+                    source={lock}
+                    onInputText={(e) => setPassword(e.target.value)}
+                  />
+                </>
+              ) : (
+                <>
+                  <AppInput
+                    type="text"
+                    placeholder="name"
+                    source={user}
+                    onInputText={(e) => setName(e.target.value)}
+                  />
+                  <AppInput
+                    type="email"
+                    placeholder="email"
+                    source={mail}
+                    onInputText={(e) => setEmail(e.target.value)}
+                  />
+                  <AppInput
+                    type="password"
+                    placeholder="password"
+                    source={lock}
+                    onInputText={(e) => setPassword(e.target.value)}
+                  />
+                </>
+              )}
+            </div>
+            {/* <div className="submit-button-container"> */}
+            <button className="submit-button" onClick={auth}>
+              {isSignIn ? "Sign In" : "Sign Up"}
+            </button>
+            {/* </div> */}
+          </div>
         </div>
       </div>
     </>
