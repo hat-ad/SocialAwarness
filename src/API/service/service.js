@@ -43,12 +43,12 @@ export default class API {
         },
       };
 
-      console.log("api -> " + this.oAuth);
-      console.log("params -> ", options);
+      // console.log("api -> " + this.oAuth);
+      // console.log("params -> ", options);
 
       fetch(this.oAuth, options)
         .then((response) => {
-          console.log("____response____ ", response);
+          // console.log("____response____ ", response);
           if (response.status === 400) {
             const obj = {
               message: "Something Went Wrong",
@@ -61,7 +61,7 @@ export default class API {
           });
         })
         .catch((error) => {
-          console.log("error: ", error);
+          // console.log("error: ", error);
           reject(error);
         }); //to catch the errors if any
     });
@@ -80,8 +80,7 @@ export default class API {
             : {
                 // Authorization:
                 //   token !== null && `${token.token_type} ${token.access_token}`,
-                Authorization:
-                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDEyN2UzZjViMTFjOTM4N2YwZjRlZDAiLCJpYXQiOjE2MTE4MjYxNzl9.g-n4qN9ynFwJ92GtFRTno96fejMQbDo__s9JAuII5OQ",
+                Authorization: "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json",
               },
           method: method,
@@ -91,8 +90,7 @@ export default class API {
           headers: header
             ? header
             : {
-                Authorization:
-                  "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDEyN2UzZjViMTFjOTM4N2YwZjRlZDAiLCJpYXQiOjE2MTE4MjYxNzl9.g-n4qN9ynFwJ92GtFRTno96fejMQbDo__s9JAuII5OQ",
+                Authorization: "Bearer " + localStorage.getItem("token"),
 
                 // Authorization: `${token.token_type} ${token.access_token}`,
                 "Content-Type": "application/json",
@@ -102,8 +100,8 @@ export default class API {
         };
       }
 
-      console.log("api -> " + url);
-      console.log("params -> ", options);
+      // console.log("api -> " + url);
+      // console.log("params -> ", options);
       fetch(url, options)
         .then((response) => {
           console.log("____response____ ", response);
@@ -119,7 +117,7 @@ export default class API {
           });
         })
         .catch((error) => {
-          console.log("error: ", error);
+          // console.log("error: ", error);
           reject(error);
         }); //to catch the errors if any
     });
@@ -132,8 +130,7 @@ export default class API {
       let options = {
         headers: {
           // "Content-Type": "multipart/form-data",
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDEyN2UzZjViMTFjOTM4N2YwZjRlZDAiLCJpYXQiOjE2MTE4MjYxNzl9.g-n4qN9ynFwJ92GtFRTno96fejMQbDo__s9JAuII5OQ",
+          Authorization: "Bearer " + localStorage.getItem("token"),
           //   Authorization: `${token.token_type} ${token.access_token}`,
         },
         method: method,

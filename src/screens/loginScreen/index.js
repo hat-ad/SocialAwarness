@@ -31,6 +31,7 @@ const LoginScreen = (props) => {
         "userID",
         isSignIn ? response.userId : response.user._id
       );
+      localStorage.setItem("token", isSignIn ? response.token : response.token);
       props.history.replace("/home");
     } else {
       alert("please login to continue");

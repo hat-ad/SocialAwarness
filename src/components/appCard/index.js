@@ -69,7 +69,12 @@ const AppCard = ({
         </div>
         <div className="posts-body">
           <div className="post-body-text mb-2">
-            {txtBody}...<span>read more</span>
+            <Link
+              to={"/details/" + cause_id + "/" + isAd}
+              className="appreciate-button"
+            >
+              {txtBody}...<span>read more</span>
+            </Link>
           </div>
           <div className="post-body-image-container">
             <img src={srcBody} alt="pr" className="post-body-image"></img>

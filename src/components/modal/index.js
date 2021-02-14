@@ -5,9 +5,9 @@ import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 import API from "../../API/service/api";
 
-const Modal = ({ onClick, currentTime }) => {
+const Modal = ({ onClick, currentTime, getPost }) => {
   const [isAd, setisAd] = useState(false);
-  const [imgName, setImageName] = useState("");
+  const [imgName, setImageName] = useState({});
   const [videoName, setVideoName] = useState("");
 
   const [title, setTitle] = useState("");
@@ -29,26 +29,42 @@ const Modal = ({ onClick, currentTime }) => {
     setVideoName(e.target.files[0].name);
   };
 
+  const getImageDBURI = () => {
+    return new Promise((resolve, reject) => {
+      let data = new FormData();
+      data.append("file", imgName);
+      data.append("upload_preset", "social-awareness");
+      data.append("cloud_name", "ds7xxwtvb");
+      fetch("https://api.cloudinary.com/v1_1/ds7xxwtvb/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
   const _handleSubmit = async () => {
+    let imgURL = await getImageDBURI();
     let formdata = new FormData();
+    console.log(imgURL);
     formdata.append("title", title);
     formdata.append("content", description);
-    formdata.append("img", imgName, imgName.name);
-    formdata.append(
-      "createdBy",
-      `${localStorage.getItem("name")}Image${localStorage.getItem(
-        "profile_Img"
-      )}`
-    );
-    formdata.append("createdByID", localStorage.getItem("userID"));
-    // for (let pair of formdata.entries()) {
-    //   console.log(pair[0] + ", " + pair[1]);
-    // }
+    formdata.append("media", imgURL.url);
+    formdata.append("mediaType", imgURL.format);
+    for (let pair of formdata.entries()) {
+      console.log(pair[0] + ", " + pair[1]);
+    }
     await API.postForm(isAd ? "ad" : "cause", formdata);
+
     onClick();
+    getPost();
     alert("your post has been created");
-    //TODO : add the post added status using redux
   };
+
   const _validation = () => {
     if (title === "" && description === "" && imgName === "") {
       alert(`please fill all the fields and upload an image to proceed`);

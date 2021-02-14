@@ -177,9 +177,7 @@ const HomeScreen = () => {
   };
 
   const _handleUserAd = async () => {
-    const response = await API.get(
-      `ad?id=${localStorage.getItem("userID")}&user=1`
-    );
+    const response = await API.get(`ad?id=${localStorage.getItem("userID")}`);
     setUserADCount(response.AD.length);
     if (response.status === "OK") {
       setPost(response.AD);
@@ -193,23 +191,40 @@ const HomeScreen = () => {
     }
   };
 
+  const getImageDBURI = () => {
+    return new Promise((resolve, reject) => {
+      let data = new FormData();
+      data.append("file", profileImg);
+      data.append("upload_preset", "social-awareness");
+      data.append("cloud_name", "ds7xxwtvb");
+      fetch("https://api.cloudinary.com/v1_1/ds7xxwtvb/image/upload", {
+        method: "post",
+        body: data,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          resolve(data);
+        })
+        .catch((err) => reject(err));
+    });
+  };
+
   const _handleEdit = async () => {
     if (!edit) setEdit(true);
     else {
       setEdit(false);
-      console.log(profileImg);
+      let imgURL = await getImageDBURI();
+      console.log(imgURL.url);
       let formdata = new FormData();
-      if (editImg) {
-        formdata.append("img", profileImg, profileImg.name);
-      } else {
-        formdata.append("username", username || userDetails.username);
-        formdata.append("ph_no", parseInt(contact || userDetails.contact));
-        formdata.append("email", email || userDetails.email);
-        formdata.append("name", name || userDetails.name);
-      }
+      formdata.append("profile_img", imgURL.url || userDetails.profile_img);
+
+      formdata.append("username", username || userDetails.username);
+      formdata.append("ph_no", parseInt(contact || userDetails.contact));
+      formdata.append("email", email || userDetails.email);
+      formdata.append("name", name || userDetails.name);
 
       const response = await API.upload(
-        `user/${localStorage.getItem("userID")}?profImg=${editImg}`,
+        `user/${localStorage.getItem("userID")}`,
         formdata
       );
       getUser(localStorage.getItem("userID"));
@@ -239,7 +254,7 @@ const HomeScreen = () => {
                     <td>{ob.name}</td>
                     <td>{ob.location}</td>
                     <td>{ob.ph_no}</td>
-                    <td>{volunteers.posts[index].title}</td>
+                    <td>{ob.post.title}</td>
                   </tr>
                 );
               })}
@@ -268,7 +283,7 @@ const HomeScreen = () => {
                     <th scope="row">{index + 1}</th>
                     <td>{ob.name}</td>
                     <td>{ob.ph_no}</td>
-                    <td>{leads.posts[index][0].title}</td>
+                    <td>{ob.post.title}</td>
                   </tr>
                 );
               })}
@@ -280,10 +295,10 @@ const HomeScreen = () => {
       return post.map((obj) => {
         return (
           <AppCard
-            name={obj.createdBy.split("Image")[0]}
-            src={obj.createdBy.split("Image")[1]}
+            name={obj.createdBy.name}
+            src={obj.createdBy.profile_img}
             txtBody={obj.content}
-            srcBody={`data:${obj.mediaType};base64,${obj.media}`}
+            srcBody={obj.media}
             // srcBody={obj.media}
             time={obj.dateCreated}
             onAppreciate={() => {
@@ -301,7 +316,7 @@ const HomeScreen = () => {
             key={obj._id}
             cause_id={obj._id}
             isAd={obj.isAd}
-            postCreatorId={obj.createdByID}
+            postCreatorId={obj.createdBy._id}
           />
         );
       });
@@ -464,6 +479,7 @@ const HomeScreen = () => {
             setShowModal(false);
           }}
           currentTime={getCurrentTime()}
+          getPost={getPost}
         />
       ) : null}
     </div>

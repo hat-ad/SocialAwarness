@@ -37,10 +37,6 @@ const DetailsScreen = () => {
 
   const _createComments = async () => {
     let data = {
-      commented_by: {
-        name: localStorage.getItem("name"),
-        prof_img: localStorage.getItem("profile_Img"),
-      },
       desc: inComment,
       post_con: cause_id,
     };
@@ -60,16 +56,16 @@ const DetailsScreen = () => {
 
       if (response.status === "OK") {
         setPostDetails(response.AD[0]);
-        setName(response.AD[0].createdBy.split("Image")[0]);
-        setProfImg(response.AD[0].createdBy.split("Image")[1]);
+        setName(response.AD[0].createdBy.name);
+        setProfImg(response.AD[0].createdBy.profile_img);
         setAppreciateName(response.AD[0].interest_count.length + " interested");
       }
     } else {
       const response = await API.get(`cause?id=${cause_id}&user=0`);
       if (response.status === "OK") {
         setPostDetails(response.cause[0]);
-        setName(response.cause[0].createdBy.split("Image")[0]);
-        setProfImg(response.cause[0].createdBy.split("Image")[1]);
+        setName(response.cause[0].createdBy.name);
+        setProfImg(response.cause[0].createdBy.profile_img);
         setAppreciateName(
           response.cause[0].appreciateBy.length + " appreciated"
         );
@@ -133,7 +129,7 @@ const DetailsScreen = () => {
               <div className="post-detail-image-container">
                 <img
                   className="card-img-top"
-                  src={`data:${postDetails.mediaType};base64,${postDetails.media}`}
+                  src={postDetails.media}
                   alt="img"
                   // height="400"
                 />
@@ -195,7 +191,7 @@ const DetailsScreen = () => {
               {comments.map((obj) => {
                 return (
                   <Comment
-                    src={obj.commented_by.prof_img}
+                    src={obj.commented_by.profile_img}
                     name={obj.commented_by.name}
                     desc={obj.desc}
                     time={obj.dateCreated}
