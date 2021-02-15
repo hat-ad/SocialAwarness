@@ -36,17 +36,21 @@ const DetailsScreen = () => {
   };
 
   const _createComments = async () => {
-    let data = {
-      desc: inComment,
-      post_con: cause_id,
-    };
-    console.log(data);
-    const response = await API.post("comment/", data);
-    console.log(response);
-    if (response.status === "Comment Created") {
-      _getComments();
+    if (inComment === "") {
+      alert("please enter a comment");
+    } else {
+      let data = {
+        desc: inComment,
+        post_con: cause_id,
+      };
+      console.log(data);
+      const response = await API.post("comment/", data);
+      console.log(response);
+      if (response.status === "Comment Created") {
+        _getComments();
+      }
+      setInComment("");
     }
-    setInComment("");
   };
 
   const _getPostDetails = async () => {
@@ -179,6 +183,7 @@ const DetailsScreen = () => {
                 placeholder="comment"
                 onInput={(e) => setInComment(e.target.value)}
                 value={inComment}
+                autoFocus={true}
               />
               <img
                 src={plane}

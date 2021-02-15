@@ -10,8 +10,10 @@ import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 
 import API from "../../API/service/api";
+import { Link, useHistory } from "react-router-dom";
 
 const HomeScreen = () => {
+  const history = useHistory();
   const [isShowModal, setShowModal] = useState(false);
   const [edit, setEdit] = useState(false);
   const [cause, setCause] = useState([]);
@@ -20,6 +22,7 @@ const HomeScreen = () => {
 
   const [profileImg, setProfileImg] = useState("");
   const [editImg, setEditImg] = useState(0);
+  const [editProfileImg, setEditProfileImg] = useState("");
   const [userDetails, setUserDetails] = useState({});
   const [appreciateStatus, setAppreciateStatus] = useState(false);
   const [interestStatus, setInterestStatus] = useState(false);
@@ -38,11 +41,13 @@ const HomeScreen = () => {
   const [leadsLength, setLeadsLength] = useState(0);
   const [postsTab, showPostsTab] = useState(true);
 
+  const [fileInputRef, setFileInputRef] = useState({});
+
   //input fields
-  const [email, setEmail] = useState(null);
-  const [name, setName] = useState(null);
-  const [contact, setContact] = useState(null);
-  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [username, setUsername] = useState("");
 
   useEffect(() => {
     console.log(localStorage.getItem("userID"));
@@ -79,7 +84,13 @@ const HomeScreen = () => {
     setUserDetails(response);
     localStorage.setItem("profile_Img", response.img);
     localStorage.setItem("name", response.name);
-
+    setName(response.name);
+    setEmail(response.email);
+    console.log("phone no: ", response.contact);
+    setContact(response.contact);
+    setUsername(response.username);
+    setProfileImg(response.img);
+    setEditProfileImg(response.img);
     console.log("user is", response);
   };
   const getVolunteer = async (id, post, first) => {
@@ -213,19 +224,28 @@ const HomeScreen = () => {
     if (!edit) setEdit(true);
     else {
       setEdit(false);
-      let imgURL = await getImageDBURI();
-      console.log(imgURL.url);
-      let formdata = new FormData();
-      formdata.append("profile_img", imgURL.url || userDetails.profile_img);
 
-      formdata.append("username", username || userDetails.username);
-      formdata.append("ph_no", parseInt(contact || userDetails.contact));
-      formdata.append("email", email || userDetails.email);
-      formdata.append("name", name || userDetails.name);
+      const formData = {
+        profile_img: profileImg,
+        username: username,
+        ph_no: contact,
+        email: email,
+        name: name,
+      };
 
-      const response = await API.upload(
+      let imgURL = {};
+      if (profileImg !== "") {
+        imgURL = await getImageDBURI();
+        console.log(imgURL.url);
+        formData.profile_img = imgURL.url;
+      }
+
+      console.log("userDetails: ", userDetails);
+      console.log("formData: ", formData);
+
+      const response = await API.update(
         `user/${localStorage.getItem("userID")}`,
-        formdata
+        formData
       );
       getUser(localStorage.getItem("userID"));
     }
@@ -334,25 +354,33 @@ const HomeScreen = () => {
                   style={{
                     position: "absolute",
                     top: "1%",
-                    paddingTop: "6%",
-                    paddingBottom: "6%",
-                    width: "120px",
-                    height: "13%",
-                    opacity: 0,
+                    display: "none",
                   }}
                   className="inp"
                   onChange={(e) => {
                     setEditImg(1);
                     setProfileImg(e.target.files[0]);
+                    setEditProfileImg(URL.createObjectURL(e.target.files[0]));
                   }}
+                  accept={"image/x-png,image/jpeg,image/jpg"}
                   disabled={!edit}
+                  ref={(fileInput) => setFileInputRef(fileInput)}
                 />
                 <img
-                  src={userDetails.img}
+                  src={editProfileImg}
                   alt="pr"
                   className="profile_pic"
                   height={110}
                   width={120}
+                  onClick={() => fileInputRef.click()}
+                  onMouseOver={(e) => {
+                    if (edit) {
+                      e.target.style.opacity = 0.5;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.opacity = 1;
+                  }}
                 ></img>
               </div>
 
@@ -391,9 +419,25 @@ const HomeScreen = () => {
                   onInputText={(e) => setContact(e.target.value)}
                 />
               </div>
-              <button className="edit" onClick={() => _handleEdit()}>
-                {edit ? "submit" : "edit"}
-              </button>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <button className="edit" onClick={() => _handleEdit()}>
+                  {edit ? "submit" : "edit"}
+                </button>
+                <Link
+                  className="edit appreciate-button"
+                  style={{ marginLeft: 10, textAlign: "center" }}
+                  to="/"
+                  onClick={() => {
+                    localStorage.removeItem("userID");
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("profile_Img");
+                    history.replace("/logout");
+                  }}
+                >
+                  {"logout"}
+                </Link>
+              </div>
             </div>
           </div>
         </div>

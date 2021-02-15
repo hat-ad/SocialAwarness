@@ -7,13 +7,14 @@ import user from "../../Assets/user_ico.png";
 import mail from "../../Assets/email_ico.png";
 import lock from "../../Assets/lock_ico.png";
 
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import API from "../../API/service/api";
 
 const Token = createContext();
 
 const LoginScreen = (props) => {
+  const history = useHistory();
   const [isSignIn, setSignIn] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,11 +33,17 @@ const LoginScreen = (props) => {
         isSignIn ? response.userId : response.user._id
       );
       localStorage.setItem("token", isSignIn ? response.token : response.token);
-      props.history.replace("/home");
+      history.push("/home");
     } else {
-      alert("please login to continue");
+      if (response.error === "user exist") {
+        alert("User Exist! Please Login to Continue.");
+      } else if (response.error === "user does not exist") {
+        alert("User Does Not Exist! Please Sign Up to Continue.");
+      } else if (response.error === "email or password is incorrect") {
+        alert("Email or Password is Incorrect!");
+      }
     }
-    <Token.Provider value={response.token} />;
+    // <Token.Provider value={response.token} />;
   };
 
   return (

@@ -7,7 +7,7 @@ import API from "../../API/service/api";
 
 const Modal = ({ onClick, currentTime, getPost }) => {
   const [isAd, setisAd] = useState(false);
-  const [imgName, setImageName] = useState({});
+  const [imgName, setImageName] = useState("");
   const [videoName, setVideoName] = useState("");
 
   const [title, setTitle] = useState("");
@@ -48,21 +48,29 @@ const Modal = ({ onClick, currentTime, getPost }) => {
   };
 
   const _handleSubmit = async () => {
-    let imgURL = await getImageDBURI();
-    let formdata = new FormData();
-    console.log(imgURL);
-    formdata.append("title", title);
-    formdata.append("content", description);
-    formdata.append("media", imgURL.url);
-    formdata.append("mediaType", imgURL.format);
-    for (let pair of formdata.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
-    await API.postForm(isAd ? "ad" : "cause", formdata);
+    if (title === "") {
+      alert("Please add a title.");
+    } else if (description === "") {
+      alert("Please add a description.");
+    } else if (imgName === "") {
+      alert("Please add a Image.");
+    } else {
+      let imgURL = await getImageDBURI();
+      let formdata = new FormData();
+      console.log(imgURL);
+      formdata.append("title", title);
+      formdata.append("content", description);
+      formdata.append("media", imgURL.url);
+      formdata.append("mediaType", imgURL.format);
+      for (let pair of formdata.entries()) {
+        console.log(pair[0] + ", " + pair[1]);
+      }
+      await API.postForm(isAd ? "ad" : "cause", formdata);
 
-    onClick();
-    getPost();
-    alert("your post has been created");
+      onClick();
+      getPost();
+      alert("your post has been created");
+    }
   };
 
   const _validation = () => {
@@ -133,7 +141,7 @@ const Modal = ({ onClick, currentTime, getPost }) => {
                 onInput={(e) => {
                   setTitle(e.target.value);
                 }}
-                required
+                required={true}
               />
             </div>
             <br />
@@ -169,10 +177,11 @@ const Modal = ({ onClick, currentTime, getPost }) => {
                 type="file"
                 style={{ position: "absolute", width: "10%", opacity: "0" }}
                 onChange={_handleFileSelectImg}
+                accept={"image/x-png,image/jpeg,image/jpg"}
               />
               <img src={gallery} className="post-create-media-img" alt="img" />
               <span className="post-create-label " style={{ fontSize: "20px" }}>
-                {imgName === "" ? "photo" : imgName.name}
+                {imgName === "" ? "Photo" : imgName.name}
               </span>
             </div>
             {/* <button className="post-create-media-button ">

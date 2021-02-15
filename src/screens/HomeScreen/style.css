@@ -55,6 +55,10 @@
   border-radius: 7px;
 }
 
+.edit:hover {
+  color: black;
+}
+
 .tabs {
   margin-top: 10%;
   width: 280px;
@@ -172,7 +176,7 @@
   align-items: center;
   justify-content: center;
 }
-.user-detail-img-container:hover {
+/* .user-detail-img-container:hover {
   transition: 0.5s;
   opacity: 0.6;
-}
+} */

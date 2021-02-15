@@ -16,6 +16,10 @@ export default class API {
     return this.httpRequest("POST", this.baseUrl + endpoint, params, header);
   }
 
+  update(endpoint, params, header) {
+    return this.httpRequest("PATCH", this.baseUrl + endpoint, params, header);
+  }
+
   postForm(endpoint, params, header) {
     return this.httpRequestForFormData(
       "POST",
