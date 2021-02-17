@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./style.css";
 
 import { HomeInput, AppCard, Modal } from "../../components/index";
@@ -9,10 +9,13 @@ import call from "../../Assets/call.png";
 import gallery from "../../Assets/gallery.png";
 import video from "../../Assets/video.png";
 
+import { AuthContext } from "../../API/context/index";
+
 import API from "../../API/service/api";
 import { Link, useHistory } from "react-router-dom";
 
 const HomeScreen = () => {
+  const { token, setToken } = useContext(AuthContext);
   const history = useHistory();
   const [isShowModal, setShowModal] = useState(false);
   const [edit, setEdit] = useState(false);
@@ -110,11 +113,12 @@ const HomeScreen = () => {
     const response = await API.get(`lead?id=${id}`);
     setLeadsLength(response.lead.length);
     setLeads(response);
+    // showPostsTab(false);
 
     if (leads !== {} && !first) {
-      showLeadsTab(true);
       showVolunteersTab(false);
-      console.log();
+      // showPostsTab(false);
+      showLeadsTab(true);
     }
   };
   const getPost = async () => {
@@ -181,6 +185,9 @@ const HomeScreen = () => {
       `cause?id=${localStorage.getItem("userID")}&user=1`
     );
     setUserCauseCount(response.cause.length);
+    if (!leadsTab || !volunteersTab) {
+      showPostsTab(true);
+    }
     if (response.status === "OK") {
       setPost(response.cause);
     }
@@ -193,6 +200,7 @@ const HomeScreen = () => {
     if (response.status === "OK") {
       setPost(response.AD);
     }
+    showVolunteersTab(false);
   };
   const _handleModal = () => {
     if (!isShowModal) {
@@ -312,34 +320,38 @@ const HomeScreen = () => {
         </>
       );
     } else if (postsTab) {
-      return post.map((obj) => {
-        return (
-          <AppCard
-            name={obj.createdBy.name}
-            src={obj.createdBy.profile_img}
-            txtBody={obj.content}
-            srcBody={obj.media}
-            // srcBody={obj.media}
-            time={obj.dateCreated}
-            onAppreciate={() => {
-              _handleAppreciateClick(obj._id, obj.isAd);
-            }}
-            appreciateCount={
-              obj.isAd
-                ? (interestStatus
-                    ? obj.interest_count.length + 1
-                    : obj.interest_count.length) + " interested"
-                : (appreciateStatus
-                    ? obj.appreciateBy.length + 1
-                    : obj.appreciateBy.length) + " appreciated"
-            }
-            key={obj._id}
-            cause_id={obj._id}
-            isAd={obj.isAd}
-            postCreatorId={obj.createdBy._id}
-          />
-        );
-      });
+      return (
+        <>
+          {post.map((obj) => {
+            return (
+              <AppCard
+                name={obj.createdBy.name}
+                src={obj.createdBy.profile_img}
+                txtBody={obj.content}
+                srcBody={obj.media}
+                // srcBody={obj.media}
+                time={obj.dateCreated}
+                onAppreciate={() => {
+                  _handleAppreciateClick(obj._id, obj.isAd);
+                }}
+                appreciateCount={
+                  obj.isAd
+                    ? (interestStatus
+                        ? obj.interest_count.length + 1
+                        : obj.interest_count.length) + " interested"
+                    : (appreciateStatus
+                        ? obj.appreciateBy.length + 1
+                        : obj.appreciateBy.length) + " appreciated"
+                }
+                key={obj._id}
+                cause_id={obj._id}
+                isAd={obj.isAd}
+                postCreatorId={obj.createdBy._id}
+              />
+            );
+          })}
+        </>
+      );
     }
   };
   return (
@@ -428,11 +440,12 @@ const HomeScreen = () => {
                   style={{ marginLeft: 10, textAlign: "center" }}
                   to="/"
                   onClick={() => {
+                    setToken(null);
+                    history.push("/");
                     localStorage.removeItem("userID");
                     localStorage.removeItem("token");
                     localStorage.removeItem("name");
                     localStorage.removeItem("profile_Img");
-                    history.replace("/logout");
                   }}
                 >
                   {"logout"}

@@ -170,7 +170,7 @@ const Modal = ({ onClick, currentTime, getPost }) => {
             }}
           >
             <span className="modal-media-label">
-              {isAd ? "Addto your Advertisement: " : "Add to your Cause: "}
+              {isAd ? "Add to your Advertisement: " : "Add to your Cause: "}
             </span>
             <div className="post-create-media-button">
               <input
