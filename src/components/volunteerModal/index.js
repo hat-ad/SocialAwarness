@@ -23,8 +23,8 @@ const VolunteerModal = ({ onClick, isLead, postId, postCreatorId }) => {
     if (!isLead) data.location = address;
 
     const response = await API.post(isLead ? "lead" : "volunteer", data);
-    console.log("lead ", response);
-
+    // console.log("lead ", response);
+    alert("your details has been submitted");
     //TODO : add the post added status using redux
   };
   return (

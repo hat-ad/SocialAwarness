@@ -56,7 +56,11 @@ const HomeScreen = () => {
     console.log(localStorage.getItem("userID"));
     getUser(localStorage.getItem("userID"));
     _handleUserCampaigns();
+    _handleUserAd();
     getPost();
+    showVolunteersTab(false);
+    showLeadsTab(false);
+
     getVolunteer(localStorage.getItem("userID"), 1, true);
     getLead(localStorage.getItem("userID"), true);
     // eslint-disable-next-line
@@ -108,18 +112,28 @@ const HomeScreen = () => {
       showVolunteersTab(true);
       showLeadsTab(false);
     }
+    console.log("====================================");
+    console.log(
+      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
+    );
+    console.log("====================================");
   };
   const getLead = async (id, first) => {
     const response = await API.get(`lead?id=${id}`);
     setLeadsLength(response.lead.length);
     setLeads(response);
-    // showPostsTab(false);
+    // showPostsTab(!postsTab);
 
     if (leads !== {} && !first) {
       showVolunteersTab(false);
       // showPostsTab(false);
       showLeadsTab(true);
     }
+    console.log("====================================");
+    console.log(
+      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
+    );
+    console.log("====================================");
   };
   const getPost = async () => {
     const causeList = await API.get("cause");
@@ -130,7 +144,7 @@ const HomeScreen = () => {
     if (adList.status === "OK") {
       setAd(adList.AD);
     }
-    setUserADCount(adList.AD.length);
+    // setUserADCount(adList.AD.length);
 
     showLeadsTab(false);
     showVolunteersTab(false);
@@ -192,15 +206,28 @@ const HomeScreen = () => {
       setPost(response.cause);
     }
     showVolunteersTab(false);
+    console.log("====================================");
+    console.log(
+      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
+    );
+    console.log("====================================");
   };
 
   const _handleUserAd = async () => {
-    const response = await API.get(`ad?id=${localStorage.getItem("userID")}`);
+    const response = await API.get(
+      `ad?id=${localStorage.getItem("userID")}&user=1`
+    );
+    console.log("response: ", response);
     setUserADCount(response.AD.length);
     if (response.status === "OK") {
       setPost(response.AD);
     }
     showVolunteersTab(false);
+    console.log("====================================");
+    console.log(
+      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
+    );
+    console.log("====================================");
   };
   const _handleModal = () => {
     if (!isShowModal) {
@@ -237,7 +264,7 @@ const HomeScreen = () => {
         profile_img: profileImg,
         username: username,
         ph_no: contact,
-        email: email,
+        // email: email,
         name: name,
       };
 
@@ -290,7 +317,8 @@ const HomeScreen = () => {
           </table>
         </>
       );
-    } else if (leadsTab) {
+    }
+    if (leadsTab) {
       return (
         <>
           <h1>Leads</h1>
@@ -319,7 +347,8 @@ const HomeScreen = () => {
           </table>
         </>
       );
-    } else if (postsTab) {
+    }
+    if (postsTab) {
       return (
         <>
           {post.map((obj) => {
@@ -414,14 +443,14 @@ const HomeScreen = () => {
                   value={userDetails.name}
                   onInputText={(e) => setName(e.target.value)}
                 />
-                <HomeInput
+                {/* <HomeInput
                   source={mail}
                   disabled={!edit}
                   placeholder="email"
                   styleImg={{ width: "28px", height: "29px" }}
                   value={userDetails.email}
                   onInputText={(e) => setEmail(e.target.value)}
-                />
+                /> */}
                 <HomeInput
                   source={call}
                   disabled={!edit}

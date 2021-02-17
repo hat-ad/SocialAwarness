@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
 import { useParams } from "react-router";
-
+import { useHistory } from "react-router-dom";
 import { Comment, Modal, VolunteerModal } from "../../components/index";
 
 import appreciate_ico from "../../Assets/clap.png";
 import comment_ico from "../../Assets/comment.png";
 import volunteer_ico from "../../Assets/volunteer.png";
 import plane from "../../Assets/plane.png";
+import heart from "../../Assets/heart.png";
+import operator from "../../Assets/operator.png";
+import back from "../../Assets/left-arrow.png";
 
 import API from "../../API/service/api";
 const DetailsScreen = () => {
+  const history = useHistory();
   const [appreciateName, setAppreciateName] = useState();
   const [isShowVolunteerModal, setShowVolunteer] = useState(false);
   const [comments, setComments] = useState([]);
@@ -116,6 +120,15 @@ const DetailsScreen = () => {
       <div className="detail-container row justify-content-between">
         <div className="col-9 mb-5">
           <div className="container post-detail-container">
+            <img
+              height="3%"
+              width="3%"
+              style={{ cursor: "pointer" }}
+              src={back}
+              alt="back"
+              onClick={() => history.push("/home")}
+            />
+
             <div className="detail-header">{postDetails.title}</div>
             <div className="posts-header">
               <div className="post-header-image-container">
@@ -124,7 +137,25 @@ const DetailsScreen = () => {
               <div className="post-header-name-container">
                 <span className="post-header-title">{name}</span>
                 <span className="post-header-subtitle">
-                  {postDetails.dateCreated}
+                  {isAD ? (
+                    <span
+                      style={{
+                        padding: "3%",
+                        paddingInline: "6%",
+                        marginLeft: "1%",
+                        backgroundColor: "#ffc107",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "1.2rem",
+                        marginTop: "0.1rem",
+                        marginBottom: "1.1rem",
+                      }}
+                    >
+                      Ad
+                    </span>
+                  ) : (
+                    postDetails.dateCreated
+                  )}
                 </span>
               </div>
             </div>
@@ -148,8 +179,11 @@ const DetailsScreen = () => {
                     className="appreciate-button"
                     onClick={_handleAppreciateClick}
                   >
-                    <img src={appreciate_ico} alt="ico" />
-                    <span>appreciate</span>
+                    <img
+                      src={isAD === "true" ? heart : appreciate_ico}
+                      alt="ico"
+                    />
+                    <span>{isAD === "true" ? "interested" : "appreciate"}</span>
                   </button>
                 </div>
                 <div className="comment">
@@ -166,8 +200,11 @@ const DetailsScreen = () => {
                     className="appreciate-button"
                     onClick={_handleVolunteerModal}
                   >
-                    <img src={volunteer_ico} alt="ico" />
-                    <span>volunteer</span>
+                    <img
+                      src={isAD === "true" ? operator : volunteer_ico}
+                      alt="ico"
+                    />
+                    <span>{isAD === "true" ? "connect" : "volunteer"}</span>
                   </button>
                 </div>
               </div>
@@ -214,6 +251,7 @@ const DetailsScreen = () => {
             setShowVolunteer(false);
           }}
           postId={cause_id}
+          isLead={isAD === "true" ? true : false}
         />
       ) : null}
     </>
