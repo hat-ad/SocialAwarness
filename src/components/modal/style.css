@@ -14,10 +14,10 @@
 .modal-main {
   background-color: #fefefe;
   margin: auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #888;
   width: 40%;
-  height: 60%;
+  /* height: 60%; */
   padding-inline: 2%;
 }
 .switch {

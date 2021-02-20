@@ -137,7 +137,7 @@ const DetailsScreen = () => {
               <div className="post-header-name-container">
                 <span className="post-header-title">{name}</span>
                 <span className="post-header-subtitle">
-                  {isAD ? (
+                  {isAD === "true" ? (
                     <span
                       style={{
                         padding: "3%",

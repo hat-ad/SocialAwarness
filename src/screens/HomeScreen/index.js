@@ -42,7 +42,7 @@ const HomeScreen = () => {
 
   const [leadsTab, showLeadsTab] = useState(false);
   const [leadsLength, setLeadsLength] = useState(0);
-  const [postsTab, showPostsTab] = useState(true);
+  const [postsTab, showPostsTab] = useState(false);
 
   const [fileInputRef, setFileInputRef] = useState({});
 
@@ -60,8 +60,10 @@ const HomeScreen = () => {
     getPost();
     showVolunteersTab(false);
     showLeadsTab(false);
+    showPostsTab(true);
 
     getVolunteer(localStorage.getItem("userID"), 1, true);
+    getVolunteered(localStorage.getItem("userID"), 0, true);
     getLead(localStorage.getItem("userID"), true);
     // eslint-disable-next-line
   }, []);
@@ -104,19 +106,22 @@ const HomeScreen = () => {
     const response = await API.get(`volunteer?id=${id}&post=${post}`);
     setVolunteersLength(response.volunteer.length);
     setVolunteers(response);
-    if (first) {
-      const response = await API.get(`volunteer?id=${id}&post=${0}`);
-      setvolunteeredLength(response.volunteer.length);
-    }
+
     if (volunteers !== {} && !first) {
       showVolunteersTab(true);
       showLeadsTab(false);
     }
-    console.log("====================================");
-    console.log(
-      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
-    );
-    console.log("====================================");
+  };
+
+  const getVolunteered = async (id, post, first) => {
+    const response = await API.get(`volunteer?id=${id}&post=${post}`);
+    setvolunteeredLength(response.volunteer.length);
+    setVolunteers(response);
+
+    if (volunteers !== {} && !first) {
+      showVolunteersTab(true);
+      showLeadsTab(false);
+    }
   };
   const getLead = async (id, first) => {
     const response = await API.get(`lead?id=${id}`);
@@ -126,14 +131,9 @@ const HomeScreen = () => {
 
     if (leads !== {} && !first) {
       showVolunteersTab(false);
-      // showPostsTab(false);
+      showPostsTab(false);
       showLeadsTab(true);
     }
-    console.log("====================================");
-    console.log(
-      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
-    );
-    console.log("====================================");
   };
   const getPost = async () => {
     const causeList = await API.get("cause");
@@ -199,6 +199,7 @@ const HomeScreen = () => {
       `cause?id=${localStorage.getItem("userID")}&user=1`
     );
     setUserCauseCount(response.cause.length);
+    showLeadsTab(false);
     if (!leadsTab || !volunteersTab) {
       showPostsTab(true);
     }
@@ -206,11 +207,6 @@ const HomeScreen = () => {
       setPost(response.cause);
     }
     showVolunteersTab(false);
-    console.log("====================================");
-    console.log(
-      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
-    );
-    console.log("====================================");
   };
 
   const _handleUserAd = async () => {
@@ -219,15 +215,12 @@ const HomeScreen = () => {
     );
     console.log("response: ", response);
     setUserADCount(response.AD.length);
+    showLeadsTab(false);
+
     if (response.status === "OK") {
       setPost(response.AD);
     }
     showVolunteersTab(false);
-    console.log("====================================");
-    console.log(
-      `post; ${postsTab} volunteer: ${volunteersTab} leads: ${leadsTab}`
-    );
-    console.log("====================================");
   };
   const _handleModal = () => {
     if (!isShowModal) {
@@ -381,6 +374,8 @@ const HomeScreen = () => {
           })}
         </>
       );
+    } else {
+      return <></>;
     }
   };
   return (
@@ -504,7 +499,7 @@ const HomeScreen = () => {
               <button
                 className="tab-text-button"
                 onClick={() =>
-                  getVolunteer(localStorage.getItem("userID"), 0, false)
+                  getVolunteered(localStorage.getItem("userID"), 0, false)
                 }
               >
                 # voluntered ( {volunteeredLength} )
