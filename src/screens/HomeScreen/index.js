@@ -356,6 +356,11 @@ const HomeScreen = () => {
                 onAppreciate={() => {
                   _handleAppreciateClick(obj._id, obj.isAd);
                 }}
+                isShow={
+                  obj.isApproved === "" || obj.isApproved === "false"
+                    ? false
+                    : true
+                }
                 appreciateCount={
                   obj.isAd
                     ? (interestStatus
@@ -470,6 +475,7 @@ const HomeScreen = () => {
                     localStorage.removeItem("token");
                     localStorage.removeItem("name");
                     localStorage.removeItem("profile_Img");
+                    localStorage.removeItem("isAdmin");
                   }}
                 >
                   {"logout"}

@@ -104,8 +104,8 @@ export default class API {
         };
       }
 
-      // console.log("api -> " + url);
-      // console.log("params -> ", options);
+      console.log("api -> " + url);
+      console.log("params -> ", options);
       fetch(url, options)
         .then((response) => {
           console.log("____response____ ", response);

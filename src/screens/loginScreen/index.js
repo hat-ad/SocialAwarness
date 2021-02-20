@@ -33,7 +33,11 @@ const LoginScreen = (props) => {
         isSignIn ? response.userId : response.user._id
       );
       localStorage.setItem("token", isSignIn ? response.token : response.token);
-      history.push("/home");
+      localStorage.setItem(
+        "isAdmin",
+        isSignIn ? response.isAdmin : response.isAdmin
+      );
+      history.push(response.isAdmin ? "/admin" : "/home");
     } else {
       if (response.error === "user exist") {
         alert("User Exist! Please Login to Continue.");

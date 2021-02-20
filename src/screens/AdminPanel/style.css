@@ -1,0 +1,15 @@
+.btn-tab {
+  color: white;
+  font-weight: 500;
+  transition: 0.8s;
+}
+.btn-tab:hover {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}
+.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+}

@@ -21,6 +21,7 @@ const AppCard = ({
   isAd,
   time,
   postCreatorId,
+  isShow,
 }) => {
   const [isShowVolunteerModal, setShowVolunteer] = useState(false);
   // const postId = id;
@@ -33,7 +34,10 @@ const AppCard = ({
   };
   return (
     <>
-      <div className="posts-card-container">
+      <div
+        className="posts-card-container"
+        style={isShow ? null : { display: "none" }}
+      >
         <div className="posts-header">
           <div className="post-header-image-container">
             <img

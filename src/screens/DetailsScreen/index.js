@@ -126,7 +126,7 @@ const DetailsScreen = () => {
               style={{ cursor: "pointer" }}
               src={back}
               alt="back"
-              onClick={() => history.push("/home")}
+              onClick={() => history.goBack()}
             />
 
             <div className="detail-header">{postDetails.title}</div>
